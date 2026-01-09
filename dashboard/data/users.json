@@ -1,0 +1,17 @@
+{
+  "admin": {
+    "password": "$2b$12$xi3ULTa5TOi23fPffhepS./V202Y3Qo123q5c81taYPycfLZVkOYG",
+    "role": "admin",
+    "name": "Administrador"
+  },
+  "analyst": {
+    "password": "$2b$12$bha3/elZ/7dgG771uTtT8e1knxXQ6LPuwfzuFd9XqduS.g8YzQx0u",
+    "role": "analyst",
+    "name": "Analista"
+  },
+  "viewer": {
+    "password": "$2b$12$GNj9fXjv0icG9cDtRSu5h.3OQLXb4WRzbGQe4iO.k06K7NeppwE4a",
+    "role": "viewer",
+    "name": "Observador"
+  }
+}
