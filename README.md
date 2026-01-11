@@ -1,6 +1,5 @@
 # OpitLearn: Plataforma de Analítica Académica
 
-OpitLearn es un sistema integral para la gestión, análisis y predicción de trayectorias académicas. Utiliza pipelines de datos robustos (ETL) y dashboards interactivos para potenciar la toma de decisiones en instituciones educativas.
 
 ## Características Principales
 - 🔄 **ETL Pipeline**: Procesamiento de datos escalable con Dask y Pandas.
