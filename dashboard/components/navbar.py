@@ -45,7 +45,9 @@ def create_navbar(current_user=None):
                 navbar=True,
             ),
         ], fluid=True),
-        color="dark",
+
+        color=None, # color handled by CSS
         dark=True,
+        sticky="top",
         className="mb-4"
     )

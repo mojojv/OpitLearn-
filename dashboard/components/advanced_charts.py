@@ -8,6 +8,15 @@ from dash import dcc
 import pandas as pd
 import numpy as np
 
+# Common layout for dark theme
+DARK_LAYOUT = dict(
+    template='plotly_dark',
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(color='#94a3b8'),
+    margin=dict(l=40, r=40, t=40, b=40)
+)
+
 def create_correlation_matrix(df):
     """Create interactive correlation heatmap"""
     if df.empty:
@@ -36,13 +45,13 @@ def create_correlation_matrix(df):
     
     fig.update_layout(
         title='Matriz de Correlación de Variables',
-        template='plotly_white',
         height=600,
         xaxis={'side': 'bottom'},
-        yaxis={'autorange': 'reversed'}
+        yaxis={'autorange': 'reversed'},
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_feature_importance_chart(importance_df):
     """Create feature importance bar chart"""
@@ -59,7 +68,7 @@ def create_feature_importance_chart(importance_df):
             orientation='h',
             marker=dict(
                 color=top_features['Correlation'],
-                colorscale='RdYlGn',
+                colorscale='Viridis',
                 showscale=True,
                 colorbar=dict(title="Correlación")
             ),
@@ -69,14 +78,14 @@ def create_feature_importance_chart(importance_df):
     ])
     
     fig.update_layout(
-        title='Top 10 Features Correlacionadas con Rendimiento Académico',
+        title='Top 10 Features Correlacionadas',
         xaxis_title='Correlación Absoluta',
         yaxis_title='Variable',
-        template='plotly_white',
-        height=500
+        height=500,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_cohort_analysis_chart(cohort_df):
     """Create cohort analysis multi-line chart"""
@@ -95,7 +104,7 @@ def create_cohort_analysis_chart(cohort_df):
     fig.add_trace(
         go.Scatter(x=cohort_df['Semestre'], y=cohort_df['Total Estudiantes'],
                   mode='lines+markers', name='Estudiantes',
-                  line=dict(color='blue', width=3)),
+                  line=dict(color='#6366f1', width=3)),
         row=1, col=1
     )
     
@@ -103,7 +112,7 @@ def create_cohort_analysis_chart(cohort_df):
     fig.add_trace(
         go.Scatter(x=cohort_df['Semestre'], y=cohort_df['Promedio GPA'],
                   mode='lines+markers', name='GPA',
-                  line=dict(color='green', width=3)),
+                  line=dict(color='#10b981', width=3)),
         row=1, col=2
     )
     
@@ -111,7 +120,7 @@ def create_cohort_analysis_chart(cohort_df):
     fig.add_trace(
         go.Scatter(x=cohort_df['Semestre'], y=cohort_df['Créditos Promedio'],
                   mode='lines+markers', name='Créditos',
-                  line=dict(color='orange', width=3)),
+                  line=dict(color='#f59e0b', width=3)),
         row=2, col=1
     )
     
@@ -119,18 +128,18 @@ def create_cohort_analysis_chart(cohort_df):
     fig.add_trace(
         go.Scatter(x=cohort_df['Semestre'], y=cohort_df['Materias Reprobadas Promedio'],
                   mode='lines+markers', name='Reprobadas',
-                  line=dict(color='red', width=3)),
+                  line=dict(color='#ef4444', width=3)),
         row=2, col=2
     )
     
     fig.update_layout(
         title_text='Análisis de Cohortes por Semestre',
-        template='plotly_white',
         height=700,
-        showlegend=False
+        showlegend=False,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_retention_curve(retention_df):
     """Create retention curve visualization"""
@@ -145,26 +154,26 @@ def create_retention_curve(retention_df):
         y=retention_df['Tasa_Retencion'],
         mode='lines+markers',
         name='Tasa de Retención',
-        line=dict(color='#2ecc71', width=4),
+        line=dict(color='#10b981', width=4),
         marker=dict(size=10),
         fill='tozeroy',
-        fillcolor='rgba(46, 204, 113, 0.2)'
+        fillcolor='rgba(16, 185, 129, 0.2)'
     ))
     
     # Add reference line at 80%
-    fig.add_hline(y=80, line_dash="dash", line_color="red",
+    fig.add_hline(y=80, line_dash="dash", line_color="#ef4444",
                   annotation_text="Meta: 80%", annotation_position="right")
     
     fig.update_layout(
         title='Curva de Retención Estudiantil',
         xaxis_title='Semestre',
         yaxis_title='Tasa de Retención (%)',
-        template='plotly_white',
         hovermode='x unified',
-        height=400
+        height=400,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_boxplot_by_program(df, metric='promedio_ultimo_semestre'):
     """Create box plot comparing programs"""
@@ -174,23 +183,26 @@ def create_boxplot_by_program(df, metric='promedio_ultimo_semestre'):
     fig = go.Figure()
     
     programs = df['programa'].unique()
-    for program in programs:
+    colors = px.colors.qualitative.Pastel
+    
+    for i, program in enumerate(programs):
         program_data = df[df['programa'] == program][metric]
         fig.add_trace(go.Box(
             y=program_data,
             name=program,
+            marker_color=colors[i % len(colors)],
             boxmean='sd'  # Show mean and standard deviation
         ))
     
     fig.update_layout(
         title=f'Distribución de {metric} por Programa',
         yaxis_title=metric,
-        template='plotly_white',
         height=500,
-        showlegend=True
+        showlegend=False,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_3d_scatter(df):
     """Create 3D scatter plot for multivariate analysis"""
@@ -207,7 +219,7 @@ def create_3d_scatter(df):
         y='promedio_ultimo_semestre',
         z='total_materias_reprobadas',
         color='programa' if 'programa' in df.columns else None,
-        title='Análisis Multivariado 3D: Créditos vs GPA vs Reprobadas',
+        title='Análisis Multivariado 3D',
         labels={
             'total_creditos_aprobados': 'Créditos Aprobados',
             'promedio_ultimo_semestre': 'Promedio (GPA)',
@@ -216,9 +228,16 @@ def create_3d_scatter(df):
         height=700
     )
     
-    fig.update_layout(template='plotly_white')
+    fig.update_layout(
+        scene=dict(
+            xaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            yaxis=dict(backgroundcolor="rgba(0,0,0,0)"),
+            zaxis=dict(backgroundcolor="rgba(0,0,0,0)")
+        ),
+        **DARK_LAYOUT
+    )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': True})
 
 def create_funnel_chart(df):
     """Create funnel chart for student progression"""
@@ -232,16 +251,16 @@ def create_funnel_chart(df):
         y=[f'Semestre {i}' for i in semester_counts.index],
         x=semester_counts.values,
         textinfo="value+percent initial",
-        marker=dict(color=px.colors.sequential.Blues_r)
+        marker=dict(color=px.colors.sequential.Purp)
     ))
     
     fig.update_layout(
         title='Embudo de Progresión Estudiantil',
-        template='plotly_white',
-        height=500
+        height=500,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_sunburst_chart(df):
     """Create sunburst chart for hierarchical data"""
@@ -266,10 +285,16 @@ def create_sunburst_chart(df):
     fig = px.sunburst(
         df,
         path=['programa', 'estrato', 'risk_level'],
-        title='Distribución Jerárquica: Programa → Estrato → Nivel de Riesgo',
-        height=600
+        title='Distribución Jerárquica',
+        height=600,
+        color='risk_level',
+        color_discrete_map={
+            'Bajo': '#10b981',
+            'Medio': '#f59e0b',
+            'Alto': '#ef4444'
+        }
     )
     
-    fig.update_layout(template='plotly_white')
+    fig.update_layout(**DARK_LAYOUT)
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})

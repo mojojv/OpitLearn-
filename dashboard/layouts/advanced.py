@@ -7,42 +7,44 @@ from dash import html, dcc
 def create_layout():
     """Create advanced analytics page layout"""
     return dbc.Container([
-        html.H1("🔬 Análisis Avanzado", className="mb-4"),
-        html.P("Herramientas avanzadas de análisis para científicos de datos y analistas", className="text-muted mb-4"),
+        html.Div([
+            html.H1("🔬 Análisis Avanzado", className="display-4 mb-2"),
+            html.P("Herramientas de inteligencia artificial y minería de datos", className="lead text-muted"),
+        ], className="mb-5"),
         
         # ML Metrics Summary
         dbc.Card([
             dbc.CardBody([
-                html.H5("📊 Métricas ML Avanzadas", className="mb-3"),
+                html.H4("📊 Métricas del Modelo en Tiempo Real", className="mb-4"),
                 dbc.Row([
-                    dbc.Col(html.Div(id="ml-metric-api"), width=3),
-                    dbc.Col(html.Div(id="ml-metric-risk"), width=3),
-                    dbc.Col(html.Div(id="ml-metric-efficiency"), width=3),
-                    dbc.Col(html.Div(id="ml-metric-mobility"), width=3),
+                    dbc.Col(html.Div(id="ml-metric-api", className="h-100"), width=12, md=6, lg=3, className="mb-3 mb-lg-0"),
+                    dbc.Col(html.Div(id="ml-metric-risk", className="h-100"), width=12, md=6, lg=3, className="mb-3 mb-lg-0"),
+                    dbc.Col(html.Div(id="ml-metric-efficiency", className="h-100"), width=12, md=6, lg=3, className="mb-3 mb-lg-0"),
+                    dbc.Col(html.Div(id="ml-metric-mobility", className="h-100"), width=12, md=6, lg=3),
                 ])
             ])
-        ], className="shadow-sm mb-4"),
+        ], className="mb-4"),
         
         # Feature Importance Section
         dbc.Row([
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("🎯 Importancia de Variables", className="mb-3"),
-                        html.P("Correlación de features con rendimiento académico", className="small text-muted"),
-                        html.Div(id="feature-importance-chart")
+                        html.H4("🎯 Importancia de Variables", className="mb-3"),
+                        html.P("Impacto relativo de cada variable en el rendimiento estudiantil", className="small text-muted mb-4"),
+                        html.Div(id="feature-importance-chart", style={'height': '350px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("🔗 Matriz de Correlación", className="mb-3"),
-                        html.P("Relaciones entre variables numéricas", className="small text-muted"),
-                        html.Div(id="correlation-matrix-chart")
+                        html.H4("🔗 Matriz de Correlación", className="mb-3"),
+                        html.P("Análisis de relaciones entre indicadores académicos", className="small text-muted mb-4"),
+                        html.Div(id="correlation-matrix-chart", style={'height': '350px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
         ], className="mb-4"),
         
         # Cohort Analysis
@@ -50,12 +52,12 @@ def create_layout():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("👥 Análisis de Cohortes", className="mb-3"),
-                        html.P("Evolución de métricas por semestre", className="small text-muted"),
-                        html.Div(id="cohort-analysis-chart")
+                        html.H4("👥 Análisis de Cohortes", className="mb-3"),
+                        html.P("Evolución longitudinal del rendimiento por semestre de ingreso", className="small text-muted mb-4"),
+                        html.Div(id="cohort-analysis-chart", style={'height': '400px'})
                     ])
-                ], className="shadow-sm")
-            ], width=12),
+                ], className="h-100")
+            ], width=12, className="mb-4"),
         ], className="mb-4"),
         
         # Retention and Progression
@@ -63,19 +65,19 @@ def create_layout():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("📈 Curva de Retención", className="mb-3"),
-                        html.Div(id="retention-curve-chart")
+                        html.H4("📈 Curva de Retención", className="mb-3"),
+                        html.Div(id="retention-curve-chart", style={'height': '350px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("🎯 Embudo de Progresión", className="mb-3"),
-                        html.Div(id="funnel-chart")
+                        html.H4("🎯 Embudo de Progresión", className="mb-3"),
+                        html.Div(id="funnel-chart", style={'height': '350px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
         ], className="mb-4"),
         
         # Advanced Visualizations
@@ -83,12 +85,12 @@ def create_layout():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("🌐 Análisis 3D Multivariado", className="mb-3"),
-                        html.P("Exploración interactiva de relaciones complejas", className="small text-muted"),
-                        html.Div(id="3d-scatter-chart")
+                        html.H4("🌐 Análisis Multidimensional", className="mb-3"),
+                        html.P("Exploración interactiva de clusters de estudiantes", className="small text-muted mb-4"),
+                        html.Div(id="3d-scatter-chart", style={'height': '600px'})
                     ])
-                ], className="shadow-sm")
-            ], width=12),
+                ], className="h-100")
+            ], width=12, className="mb-4"),
         ], className="mb-4"),
         
         # Hierarchical Analysis
@@ -96,30 +98,30 @@ def create_layout():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("☀️ Análisis Jerárquico", className="mb-3"),
-                        html.P("Distribución por Programa → Estrato → Riesgo", className="small text-muted"),
-                        html.Div(id="sunburst-chart")
+                        html.H4("☀️ Desglose Jerárquico", className="mb-3"),
+                        html.P("Distribución por Programa → Estrato → Nivel de Riesgo", className="small text-muted mb-4"),
+                        html.Div(id="sunburst-chart", style={'height': '450px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("📦 Distribución por Programa", className="mb-3"),
-                        html.P("Box plots comparativos", className="small text-muted"),
-                        html.Div(id="boxplot-chart")
+                        html.H4("📦 Distribución Comparativa", className="mb-3"),
+                        html.P("Análisis de variabilidad por programa académico", className="small text-muted mb-4"),
+                        html.Div(id="boxplot-chart", style={'height': '450px'})
                     ])
-                ], className="shadow-sm")
-            ], width=6),
+                ], className="h-100")
+            ], width=12, lg=6, className="mb-4"),
         ], className="mb-4"),
         
         # Program Benchmarks Table
         dbc.Card([
             dbc.CardBody([
-                html.H5("📋 Benchmarks por Programa", className="mb-3"),
-                html.P("Estadísticas comparativas detalladas", className="small text-muted"),
-                html.Div(id="program-benchmarks-table")
+                html.H4("📋 Benchmarks por Programa", className="mb-3"),
+                html.P("Tabla detallada de indicadores clave de rendimiento (KPIs)", className="small text-muted mb-4"),
+                html.Div(id="program-benchmarks-table", className="dash-table-container")
             ])
         ], className="shadow-sm"),
         
-    ], fluid=True)
+    ], fluid=True, className="py-4")

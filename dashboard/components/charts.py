@@ -6,6 +6,15 @@ import plotly.graph_objects as go
 from dash import dcc
 import pandas as pd
 
+# Common layout for dark theme
+DARK_LAYOUT = dict(
+    template='plotly_dark',
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(color='#94a3b8'),
+    margin=dict(l=40, r=40, t=40, b=40)
+)
+
 def create_program_distribution_chart(df):
     """Create bar chart of student distribution by program"""
     if df.empty or 'programa' not in df.columns:
@@ -20,16 +29,16 @@ def create_program_distribution_chart(df):
         y='Estudiantes',
         title='Distribución de Estudiantes por Programa',
         color='Estudiantes',
-        color_continuous_scale='Blues'
+        color_continuous_scale='Viridis'
     )
     
     fig.update_layout(
-        template='plotly_white',
         hovermode='x unified',
-        showlegend=False
+        showlegend=False,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_gpa_distribution_chart(df):
     """Create histogram of GPA distribution"""
@@ -43,7 +52,7 @@ def create_gpa_distribution_chart(df):
         nbins=20,
         title='Distribución de Promedios (GPA)',
         labels={'value': 'Promedio', 'count': 'Frecuencia'},
-        color_discrete_sequence=['#1f77b4']
+        color_discrete_sequence=['#6366f1']
     )
     
     # Add mean line
@@ -51,17 +60,17 @@ def create_gpa_distribution_chart(df):
     fig.add_vline(
         x=mean_gpa,
         line_dash="dash",
-        line_color="red",
+        line_color="#ef4444",
         annotation_text=f"Media: {mean_gpa:.2f}",
         annotation_position="top"
     )
     
     fig.update_layout(
-        template='plotly_white',
-        showlegend=False
+        showlegend=False,
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_credits_vs_gpa_scatter(df):
     """Create scatter plot of credits vs GPA"""
@@ -87,9 +96,9 @@ def create_credits_vs_gpa_scatter(df):
         hover_data=['programa']
     )
     
-    fig.update_layout(template='plotly_white')
+    fig.update_layout(**DARK_LAYOUT)
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_estrato_distribution_pie(df):
     """Create pie chart of socioeconomic stratum distribution"""
@@ -105,12 +114,13 @@ def create_estrato_distribution_pie(df):
         values='Estudiantes',
         names='Estrato',
         title='Distribución por Estrato Socioeconómico',
-        hole=0.4
+        hole=0.4,
+        color_discrete_sequence=px.colors.sequential.Purp
     )
     
-    fig.update_layout(template='plotly_white')
+    fig.update_layout(**DARK_LAYOUT)
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_performance_heatmap(df):
     """Create heatmap of performance metrics by program"""
@@ -135,7 +145,7 @@ def create_performance_heatmap(df):
         ],
         x=programs,
         y=['Promedio GPA', 'Créditos Aprobados', 'Materias Reprobadas'],
-        colorscale='RdYlGn',
+        colorscale='Viridis',
         text=[[f'{val:.2f}' for val in row] for row in [
             metrics['promedio_ultimo_semestre'].tolist(),
             metrics['total_creditos_aprobados'].tolist(),
@@ -147,22 +157,27 @@ def create_performance_heatmap(df):
     
     fig.update_layout(
         title='Mapa de Calor: Métricas por Programa',
-        template='plotly_white'
+        **DARK_LAYOUT
     )
     
-    return dcc.Graph(figure=fig)
+    return dcc.Graph(figure=fig, config={'displayModeBar': False})
 
 def create_kpi_card(title, value, icon, color="primary"):
     """Create a KPI card component"""
     import dash_bootstrap_components as dbc
     from dash import html
     
+    # Mapping colors to our custom variables if needed, 
+    # but bootstrap class overrides like text-primary work with our CSS hacks or we rely on the CSS var overrides.
+    
     return dbc.Card([
         dbc.CardBody([
             html.Div([
-                html.I(className=f"fas fa-{icon} fa-2x", style={'color': f'var(--bs-{color})'}),
-                html.H4(title, className="card-title mt-2"),
-                html.H2(value, className="card-text", style={'color': f'var(--bs-{color})'})
+                html.Div([
+                    html.I(className=f"fas fa-{icon} fa-lg"),
+                ], className=f"icon-box bg-{color} bg-opacity-10 text-{color} p-3 rounded-circle mb-3 d-inline-block"),
+                html.H4(title, className="mb-1"),
+                html.H2(value, className="mb-0")
             ], className="text-center")
         ])
-    ], className="shadow-sm mb-3")
+    ], className="h-100 card-hover")

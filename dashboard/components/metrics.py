@@ -77,8 +77,41 @@ def identify_at_risk_students(df, threshold_gpa=3.0, threshold_failed=3):
     
     return at_risk
 
+def calculate_risk_scores_vectorized(df):
+    """
+    Calculate risk scores for the entire dataframe utilizing vectorization (0-100).
+    Faster than row-by-row application.
+    """
+    if df.empty:
+        return pd.Series(dtype=float)
+
+    scores = pd.Series(0.0, index=df.index)
+
+    # GPA component (40 points)
+    if 'promedio_ultimo_semestre' in df.columns:
+        gpa = df['promedio_ultimo_semestre'].fillna(3.0)  # Neutral fill
+        gpa_score = np.maximum(0, (3.0 - gpa) / 3.0 * 40)
+        scores += gpa_score
+
+    # Failed courses component (30 points)
+    if 'total_materias_reprobadas' in df.columns:
+        failed = df['total_materias_reprobadas'].fillna(0)
+        failed_score = np.minimum(failed / 5 * 30, 30)
+        scores += failed_score
+
+    # Credit progress component (30 points)
+    if 'total_creditos_aprobados' in df.columns:
+        credits_aprob = df['total_creditos_aprobados'].fillna(30) # Neutral fill
+        credits_score = np.maximum(0, (30 - credits_aprob) / 30 * 30)
+        scores += credits_score
+    
+    return np.minimum(scores, 100)
+
 def calculate_risk_score(row):
-    """Calculate risk score for a student (0-100)"""
+    """
+    Calculate risk score for a student (0-100) - Legacy row-wise version.
+    Kept for backward compatibility if needed, but vectorized is preferred.
+    """
     score = 0
     
     # GPA component (40 points)
@@ -94,8 +127,8 @@ def calculate_risk_score(row):
     
     # Credit progress component (30 points)
     if 'total_creditos_aprobados' in row and pd.notna(row['total_creditos_aprobados']):
-        credits = row['total_creditos_aprobados']
-        if credits < 30:  # Assuming 30 is low
-            score += (30 - credits) / 30 * 30
+        credits_val = row['total_creditos_aprobados']
+        if credits_val < 30:  # Assuming 30 is low
+            score += (30 - credits_val) / 30 * 30
     
     return min(score, 100)

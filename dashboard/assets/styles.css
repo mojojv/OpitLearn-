@@ -1,149 +1,289 @@
-/* OpitLearn Dashboard Custom Styles */
+/* OpitLearn Dashboard Custom Styles - Premium Modern Design */
+
+:root {
+    --primary-bg: #0f172a;
+    --secondary-bg: #1e293b;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #6366f1;
+    /* Indigo */
+    --accent-hover: #4f46e5;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+}
 
 /* Global Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    margin: 0;
+    overflow-x: hidden;
 }
 
-/* Card Enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Glassmorphism Card Style */
 .card {
-    border-radius: 10px;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 1.5rem;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: rgba(99, 102, 241, 0.3);
 }
 
-/* KPI Cards */
+.card-body {
+    padding: 1.5rem;
+}
+
+/* KPI Cards Typography */
 .card-body h2 {
-    font-weight: bold;
-    margin-top: 10px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 10px 0;
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.card-body h4 {
-    color: #6c757d;
-    font-size: 0.9rem;
+.card-body h4,
+.card-body h5 {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-body p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
 }
 
 /* Navbar Styling */
 .navbar {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(15, 23, 42, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: var(--glass-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
 .navbar-brand {
-    font-weight: bold;
-    font-size: 1.3rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Button Enhancements */
-.btn {
-    border-radius: 6px;
+.nav-link {
+    color: var(--text-secondary) !important;
     font-weight: 500;
-    transition: all 0.2s ease-in-out;
+    transition: color 0.2s;
 }
 
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary) !important;
 }
 
-/* Table Styling */
-.dash-table-container {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.dash-spreadsheet {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Chart Containers */
-.js-plotly-plot {
-    border-radius: 8px;
-}
-
-/* Login Page */
-.login-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-/* Alerts */
-.alert {
-    border-radius: 8px;
+/* Button Stylings */
+.btn-primary {
+    background: var(--gradient-primary);
     border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.25);
 }
 
-/* Loading Spinners */
-.spinner-border {
-    color: #667eea;
+.btn-primary:hover {
+    box-shadow: 0 6px 8px rgba(99, 102, 241, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Dash Table Enhancements */
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+    background-color: var(--secondary-bg) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
+    background-color: var(--card-bg) !important;
+    color: var(--text-secondary) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner tr:hover td {
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Plotly Graph Theming Helper classes */
+.js-plotly-plot .plotly .main-svg {
+    background: transparent !important;
+}
+
+.js-plotly-plot .plotly .bg {
+    fill: transparent !important;
+}
+
+/* Specific Risk Classes (Overriding Bootstrap mostly) */
+.text-danger {
+    color: #f87171 !important;
+}
+
+.text-warning {
+    color: #fbbf24 !important;
+}
+
+.text-success {
+    color: #34d399 !important;
+}
+
+.border-danger {
+    border-left: 4px solid #ef4444 !important;
+}
+
+.border-warning {
+    border-left: 4px solid #f59e0b !important;
+}
+
+.border-success {
+    border-left: 4px solid #10b981 !important;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    width: 8px;
+    background: var(--primary-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
+    background: #475569;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #64748b;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .card-body h2 {
-        font-size: 1.5rem;
-    }
-    
-    .navbar-brand {
-        font-size: 1.1rem;
-    }
-}
-
-/* Animation for page transitions */
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.container {
-    animation: fadeIn 0.3s ease-in-out;
+.container-fluid {
+    animation: fadeIn 0.4s ease-out;
 }
 
-/* Risk Level Colors */
-.risk-high {
-    background-color: #ffebee !important;
-    border-left: 4px solid #f44336;
+/* Login Page Styles */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
 }
 
-.risk-medium {
-    background-color: #fff3e0 !important;
-    border-left: 4px solid #ff9800;
+.login-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    /* Lighter overlay */
+    backdrop-filter: blur(2px);
+    z-index: 1;
 }
 
-.risk-low {
-    background-color: #e8f5e9 !important;
-    border-left: 4px solid #4caf50;
+.login-card {
+    background: rgba(255, 255, 255, 0.9) !important;
+    /* White glassmorphism */
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    position: relative;
+    max-width: 450px;
+    width: 100%;
+}
+
+.login-content {
+    z-index: 2;
+    text-align: center;
+    color: #0f172a;
+    /* Dark text */
+}
+
+/* Ensure inputs are visible on white */
+.login-card .form-control {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+.login-card .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Fix logo visibility on white background (assuming logo is white) */
+.login-card img {
+    filter: invert(1) grayscale(1) brightness(0.2);
+    /* Turns white logo to dark grey/black */
+    opacity: 0.9;
+}
+
+/* Softer text for login card */
+.login-card h4 {
+    color: #1e293b !important;
+    /* Slate 800 */
+}
+
+.login-card .text-muted {
+    color: #64748b !important;
+    /* Slate 500 */
 }

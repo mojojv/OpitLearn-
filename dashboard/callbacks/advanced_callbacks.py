@@ -121,8 +121,8 @@ def register_callbacks(app):
                 data=benchmarks_df.to_dict('records'),
                 columns=[{'name': col, 'id': col} for col in benchmarks_df.columns],
                 style_table={'overflowX': 'auto'},
-                style_cell={'textAlign': 'left', 'padding': '10px', 'fontSize': '12px'},
-                style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
+                style_cell={'textAlign': 'left', 'padding': '12px', 'fontSize': '12px', 'backgroundColor': 'rgba(30, 41, 59, 0.7)', 'color': '#f8fafc', 'border': 'none'},
+                style_header={'backgroundColor': '#0f172a', 'fontWeight': 'bold', 'color': '#f8fafc', 'borderBottom': '1px solid #334155'},
                 page_size=10,
             )
         else:

@@ -4,8 +4,9 @@ Predictions page callbacks
 from dash import Input, Output, html, dash_table
 import dash_bootstrap_components as dbc
 from components.data_loader import load_master_data
-from components.metrics import identify_at_risk_students, calculate_risk_score
+from components.metrics import identify_at_risk_students, calculate_risk_scores_vectorized
 import pandas as pd
+import numpy as np
 
 def register_callbacks(app):
     """Register predictions page callbacks"""
@@ -31,8 +32,8 @@ def register_callbacks(app):
             empty_msg = dbc.Alert("No hay datos disponibles", color="info")
             return "0", "0", "0", empty_msg, empty_msg
         
-        # Calculate risk scores
-        df['risk_score'] = df.apply(calculate_risk_score, axis=1)
+        # Calculate risk scores (Vectorized)
+        df['risk_score'] = calculate_risk_scores_vectorized(df)
         
         # Categorize risk levels
         high_risk = df[df['risk_score'] >= 70]
@@ -51,13 +52,13 @@ def register_callbacks(app):
                 columns=[{'name': col, 'id': col} for col in display_cols],
                 page_size=10,
                 style_table={'overflowX': 'auto'},
-                style_cell={'textAlign': 'left', 'padding': '10px'},
-                style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
+                style_cell={'textAlign': 'left', 'padding': '12px', 'backgroundColor': 'rgba(30, 41, 59, 0.7)', 'color': '#f8fafc', 'border': 'none'},
+                style_header={'backgroundColor': '#0f172a', 'fontWeight': 'bold', 'color': '#f8fafc', 'borderBottom': '1px solid #334155'},
                 style_data_conditional=[
                     {
                         'if': {'filter_query': '{risk_score} >= 70'},
-                        'backgroundColor': '#ffebee',
-                        'color': 'black'
+                        'backgroundColor': 'rgba(239, 68, 68, 0.2)',
+                        'color': '#fca5a5'
                     }
                 ],
                 sort_action="native",
